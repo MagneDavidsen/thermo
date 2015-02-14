@@ -1,9 +1,12 @@
 /.idea/
-/project/boot/
-/project/plugins/project
+/.gradle/
+/build/
+/target/
 target/
 lib_managed/
 src_managed/
 test-output/
 *.iml
+*.ipr
+*.iws
 .classpath_nb

@@ -1,10 +1,14 @@
 package com.example
 
+
+import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
+import org.specs2.runner.JUnitRunner
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._
 
+@RunWith(classOf[JUnitRunner])
 class MyServiceSpec extends Specification with Specs2RouteTest with MyService {
   def actorRefFactory = system
   
