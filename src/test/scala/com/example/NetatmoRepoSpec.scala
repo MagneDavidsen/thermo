@@ -17,14 +17,9 @@ class NetatmoRepoSpec extends Specification {
 
   "NetatmoRepo" should {
 
-    "get Spray.io page" in {
+    "get token page" in {
 
-      Await.result(netatmo.getPage("http://www.norgesbesterapper.no"), Duration(3, "sec")).status.intValue must beEqualTo(200)
-    }
-
-    "get 404 page" in {
-
-      Await.result(netatmo.getPage("http://www.norgesbesterapper.no/test"), Duration(3, "sec")).status.intValue must beEqualTo(404)
+      Await.result(netatmo.getToken(), Duration(3, "sec")).getStatusCode() should beEqualTo(200)
     }
   }
 }
