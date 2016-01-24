@@ -10,3 +10,4 @@ test-output/
 *.ipr
 *.iws
 .classpath_nb
+node_modules/
