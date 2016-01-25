@@ -18,6 +18,10 @@
   "homepage": "https://github.com/MagneDavidsen/thermo#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "netatmo": "^1.4.0"
+    "netatmo": "^1.4.0",
+    "node-schedule": "^0.6.0",
+    "oauth": "^0.9.14",
+    "querystring": "^0.2.0",
+    "rsvp": "^3.1.0"
   }
 }

@@ -11,3 +11,4 @@ test-output/
 *.iws
 .classpath_nb
 node_modules/
+.env
