@@ -9,7 +9,7 @@ var auth = {
   "client_id": "52950de91877595f647d369d",
   "client_secret": process.env.netatmoSecret,
   "username": "magne.davidsen@gmail.com",
-  "password": process.env.netatmopass,
+  "password": process.env.netatmoPassword,
 };
 
   var config = {
