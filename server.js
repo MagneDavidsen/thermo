@@ -2,7 +2,9 @@ var express = require('express');
 var netatmo = require('netatmo');
 var api = require('./api.js');
 var devices = require('./devices.js');
+var MemJS = require("memjs").Client
 
+var memjs = MemJS.create();
 var app = express();
 
 var auth = {
@@ -12,7 +14,7 @@ var auth = {
   "password": process.env.netatmoPassword,
 };
 
-  var config = {
+var config = {
     telldusPublicKey: "FEHUVEW84RAFR5SP22RABURUPHAFRUNU",
     telldusPrivateKey: process.env.telldusPrivateKey,
     telldusToken: "ea3741286e268b223f7565879ec674c6056a65cc4",
@@ -23,38 +25,30 @@ var auth = {
 
 var api = new netatmo(auth);
 
-var wantedTemp = 20;
-process.env.thermostat = 25;
-
 app.get('/', function (req, res) {
   api.getStationsData(function(err, stations) {
     var actualTemp = stations[0].dashboard_data.Temperature;
+    memjs.get("thermostat", function(err, thermostat) {
+       if (thermostat) {res.send("Temperature: " + actualTemp + ", Thermostat: " + thermostat); }
+       else { res.send("Temperature: " + actualTemp + ", Thermostat: No value "); }
+       });
+     });
+   });
 
-    if(actualTemp > wantedTemp) {
-      devices.getDevices().then(function(sensors){
-          sensors.map(devices.turnOff);
-      });
-    } else if(actualTemp < wantedTemp) {
-      devices.getDevices().then(function(sensors){
-          sensors.map(devices.turnOn);
-      });
-    }
-    res.send("Temperature: " + actualTemp + ", Thermostat: " + wantedTemp);
-  });
-});
-
-app.get('/settemp/:wantedTemp', function (req, res) {
+app.get('/settemp/:thermostat', function (req, res) {
   var responseText = "";
-  if(req.params.wantedTemp && !isNaN(req.params.wantedTemp)){
-      responseText = "Thermostat was changed from " + wantedTemp + " to " + req.params.wantedTemp;
-      wantedTemp = req.params.wantedTemp;
+  memjs.get("thermostat", function(err, thermostat) {
+    if(req.params.thermostat && !isNaN(req.params.thermostat)){
+      responseText = "Thermostat was changed from " + thermostat + " to " + req.params.thermostat;
+      memjs.set("thermostat", req.params.thermostat);
   } else {
-      responseText = "Thermostat was not changed, still on " + wantedTemp;
+      responseText = "Thermostat was not changed, still on " + thermostat;
   }
     res.send(responseText);
+});
 });
 
 
 app.listen(process.env.PORT, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port ' + process.env.PORT);
 });
