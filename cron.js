@@ -27,11 +27,11 @@ api.getStationsData(function(err, stations) {
   var actualTemp = stations[0].dashboard_data.Temperature;
   memjs.get("thermostat", function(err, thermostat) {
      if (actualTemp && thermostat) {
-       if(actualTemp > thermostat) {
+       if(actualTemp > thermostat + 1) {
           devices.getDevices().then(function(sensors){
               sensors.map(devices.turnOff);
            });
-        } else if(actualTemp < thermostat) {
+        } else if(actualTemp < thermostat - 1) {
           devices.getDevices().then(function(sensors) {
               sensors.map(devices.turnOn);
           });
