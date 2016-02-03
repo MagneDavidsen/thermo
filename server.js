@@ -3,7 +3,6 @@ var netatmo = require('netatmo');
 var api = require('./api.js');
 var config = require('./config.js');
 var devices = require('./devices.js');
-var NestApi = require('nest-api');
 var nest = require('nest-thermostat').init(process.env.nestUsername, process.env.nestPassword);
 
 var app = express();

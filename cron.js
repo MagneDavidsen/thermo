@@ -2,10 +2,7 @@ var netatmo = require('netatmo');
 var api = require('./api.js');
 var devices = require('./devices.js');
 var config = require('./config.js');
-var MemJS = require("memjs").Client
 var nest = require('nest-thermostat').init(process.env.nestUsername, process.env.nestPassword);
-
-var memjs = MemJS.create();
 
 const heatersGroupId = "1124573";
 
